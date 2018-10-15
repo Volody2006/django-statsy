@@ -57,7 +57,7 @@ class Statsy(object):
                 result = func(request, *inner_args, **inner_kwargs)
                 duration = int((time.time() - time_start) * 1000)
 
-                user = request.user if request.user.is_authenticated() else None
+                user = request.user if request.user.is_authenticated else None
 
                 if watch_with_params:
                     self.send(
