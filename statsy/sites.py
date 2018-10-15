@@ -4,6 +4,7 @@ from functools import update_wrapper
 
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import PermissionDenied
+from django.urls import path
 from django.views.decorators.csrf import csrf_protect
 
 import statsy.api as api
@@ -49,15 +50,13 @@ class StatsySite(object):
         return update_wrapper(inner, view)
 
     def get_urls(self):
-        from django.conf.urls import url
-
         urlpatterns = [
-            url(r'^send/$', api.send, name='statsy.send'),
+            path('send/', api.send, name='statsy.send'),
 
-            url(r'^$', self.stats_view(views.dashboard), name='statsy.dashboard'),
-            url(r'^get_stats/$', self.stats_view(views.get_stats), name='statsy.get_stats'),
-            url(r'^custom/$', self.stats_view(views.custom), name='statsy.custom'),
-            url(r'^today/$', self.stats_view(views.today), name='statsy.today'),
+            path('', self.stats_view(views.dashboard), name='statsy.dashboard'),
+            path('get_stats/', self.stats_view(views.get_stats), name='statsy.get_stats'),
+            path('custom/', self.stats_view(views.custom), name='statsy.custom'),
+            path('today/', self.stats_view(views.today), name='statsy.today'),
         ]
 
         url_map = dict()
@@ -70,7 +69,7 @@ class StatsySite(object):
                 stats_view = permission_required(permission)(stats_view)
 
             urlpatterns.append(
-                url(r'^custom/{0}/'.format(url_part), stats_view, name=url_name)
+                path('custom/{0}/'.format(url_part), stats_view, name=url_name)
             )
 
             url_map[view_name] = url_name

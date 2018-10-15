@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 
-__version__ = '0.2.3'
+__version__ = '0.3.0'
 
 short_description = 'Statistics for Django projects'
 
@@ -16,9 +16,9 @@ except (IOError, ImportError):
 
 
 install_requires = [
-    'Django>=1.7',
+    'Django>=2.1',
     'jsonfield>=1.0.0',
-    'python-dateutil==2.5.3',
+    'python-dateutil==2.7.3',
 ]
 
 setup(

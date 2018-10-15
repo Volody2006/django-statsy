@@ -1,22 +1,23 @@
 # coding: utf-8
 
 from django.conf import settings
-from django.conf.urls import include, url
+from django.conf.urls import include
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.urls import path
 
 import example.views as views
 
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^post/(?P<post_id>\d+)/$', views.get_post, name='get_post'),
-    url(r'^about/$', views.AboutView.as_view(), name='about'),
+    path('', views.index, name='index'),
+    path('post/<int:post_id>/', views.get_post, name='get_post'),
+    path('about/', views.AboutView.as_view(), name='about'),
 
-    url(r'^stats/', include('statsy.urls')),
-    url(r'^tests/', include('tests.urls')),
+    path('stats/', include('statsy.urls')),
+    path('tests/', include('tests.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
+    path('admin/', admin.site.urls),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
@@ -26,7 +27,7 @@ if settings.DEBUG:
     try:
         import debug_toolbar
         urlpatterns.append(
-            url(r'^__debug__/', include(debug_toolbar.urls)),
+            path('__debug__/', include(debug_toolbar.urls)),
         )
     except ImportError:
         pass
