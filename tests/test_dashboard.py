@@ -28,6 +28,7 @@ class DashboardTest(TestCase):
             )
 
     def test_dashboard(self):
+        print(self.client)
         response = self.client.get(reverse('statsy.dashboard'))
 
         self.assertEqual(response.status_code, 200)
