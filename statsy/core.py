@@ -159,9 +159,9 @@ class Statsy(object):
         }
 
     def _clean_user_async(self, user):
-        return {
-            'user_id': user.id
-        }
+        if user:
+            return {'user_id': user.id}
+        return {'user': user}
 
     def _clean_group(self, group):
         if not group:
