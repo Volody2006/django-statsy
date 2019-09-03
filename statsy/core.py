@@ -29,8 +29,8 @@ class Statsy(object):
         'value', 'url', 'duration', 'extra', 'callback'
     ]
 
-    def __init__(self, async=True, cache=True):
-        if ASYNC and async:
+    def __init__(self, async_new=True, cache=True):
+        if ASYNC and async_new:
             self.send = self._send_async
         else:
             self.send = self._send
